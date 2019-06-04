@@ -3,6 +3,7 @@ package sg.edu.rp.c347.p07smsretriever;
 
 import android.Manifest;
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,9 +24,10 @@ import android.widget.Toast;
  */
 public class FragmentNum extends Fragment {
 
-    Button btnRetrieve;
+    Button btnRetrieve, btnEmail;
     TextView tvDisplay;
     EditText etNum;
+    String smsBody;
 
     public FragmentNum() {
         // Required empty public constructor
@@ -40,6 +42,7 @@ public class FragmentNum extends Fragment {
         tvDisplay = view.findViewById(R.id.tvDisplay);
         btnRetrieve = view.findViewById(R.id.btnRetrieve);
         etNum = view.findViewById(R.id.etPhone);
+        btnEmail = view.findViewById(R.id.btnEmail);
 
         btnRetrieve.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +56,7 @@ public class FragmentNum extends Fragment {
                     String[] args = {"%"+etNum.getText().toString()+"%"};
                     ContentResolver cr = getActivity().getContentResolver();
                     Cursor cursor = cr.query(uri, reqCols, filter, args, null);
-                    String smsBody = "";
+                    smsBody = "";
                     if (cursor.moveToFirst()){
                         do{
                             android.text.format.DateFormat df = new android.text.format.DateFormat();
@@ -73,6 +76,24 @@ public class FragmentNum extends Fragment {
                 }
             }
         });
+
+        btnEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (smsBody.equalsIgnoreCase("")){
+                    Toast.makeText(getContext(), "Retrieve SMS first", Toast.LENGTH_LONG).show();
+                }else{
+                    Intent email = new Intent(Intent.ACTION_SEND);
+                    email.putExtra(Intent.EXTRA_EMAIL, new String[]{"17010368@myrp.edu.sg"});
+                    email.putExtra(Intent.EXTRA_SUBJECT, "SMS contents");
+                    email.putExtra(Intent.EXTRA_TEXT, smsBody);
+
+                    email.setType("message/rfc822");
+                    startActivity(Intent.createChooser(email, "Choose an Email client: "));
+                }
+            }
+        });
+
         return view;
     }
 }
