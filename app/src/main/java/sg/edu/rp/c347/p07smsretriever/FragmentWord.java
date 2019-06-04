@@ -48,13 +48,6 @@ public class FragmentWord extends Fragment {
                 if (etWord.getText().toString().equalsIgnoreCase("")){
                     Toast.makeText(getContext(), "Please enter a word into the text field", Toast.LENGTH_LONG).show();
                 }else{
-                    int permissionCheck = PermissionChecker.checkSelfPermission(getContext(), Manifest.permission.READ_SMS);
-
-                    if (permissionCheck != PermissionChecker.PERMISSION_GRANTED){
-                        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_SMS}, 0);
-                        return;
-                    }
-
                     Uri uri = Uri.parse("content://sms");
                     String[] reqCols = new String[]{"date", "address", "body", "type"};
                     String filter = "body LIKE ?";
