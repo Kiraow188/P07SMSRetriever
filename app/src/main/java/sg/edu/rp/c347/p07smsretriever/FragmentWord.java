@@ -44,15 +44,29 @@ public class FragmentWord extends Fragment {
         btnRetrieve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (etWord.getText().toString().equalsIgnoreCase("")){
+                String word = etWord.getText().toString();
+                if (word.equalsIgnoreCase("")){
                     Toast.makeText(getContext(), "Please enter a word into the text field", Toast.LENGTH_LONG).show();
                 }else{
                     Uri uri = Uri.parse("content://sms");
                     String[] reqCols = new String[]{"date", "address", "body", "type"};
                     String filter = "body LIKE ?";
-                    String[] args = {"%"+etWord.getText().toString()+"%"};
+                    String[] arg =  {"%" + word + "%"};
                     ContentResolver cr = getActivity().getContentResolver();
-                    Cursor cursor = cr.query(uri, reqCols, filter, args, null);
+                    Cursor cursor = cr.query(uri, reqCols, filter, arg, null);
+                    if (word.contains(" ")){
+                        String[] words = word.split(" ");
+                        String[] args = new String[words.length];
+                        args[0] = "%" + words[0] + "%";
+                        for (int i = 1; i<(words.length); i++){
+                            filter += "and body LIKE ?";
+                            String fil = "%" + words[i] + "%";
+                            args[i] = fil;
+                        }
+
+                         cursor = cr.query(uri, reqCols, filter, args, null);
+                    }
+
                     String smsBody = "";
                     if (cursor.moveToFirst()){
                         do{

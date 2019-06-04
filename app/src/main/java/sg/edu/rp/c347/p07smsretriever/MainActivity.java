@@ -21,18 +21,18 @@ public class MainActivity extends AppCompatActivity {
         if (permissionCheck != PermissionChecker.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_SMS}, 0);
 
-            FragmentManager fm = getSupportFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
 
-            Fragment f1 = new FragmentNum();
-            ft.replace(R.id.frame1, f1);
-            Fragment f2 = new FragmentWord();
-            ft.replace(R.id.frame2, f2);
-
-            ft.commit();
             return;
         }
 
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
 
+        Fragment f1 = new FragmentNum();
+        ft.replace(R.id.frame1, f1);
+        Fragment f2 = new FragmentWord();
+        ft.replace(R.id.frame2, f2);
+
+        ft.commit();
     }
 }
