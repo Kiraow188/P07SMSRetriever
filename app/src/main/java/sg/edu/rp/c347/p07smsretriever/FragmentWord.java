@@ -46,7 +46,7 @@ public class FragmentWord extends Fragment {
             @Override
             public void onClick(View view) {
                 if (etWord.getText().toString().equalsIgnoreCase("")){
-                    Toast.makeText(getContext(), "Please enter a number into the text field", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Please enter a word into the text field", Toast.LENGTH_LONG).show();
                 }else{
                     int permissionCheck = PermissionChecker.checkSelfPermission(getContext(), Manifest.permission.READ_SMS);
 
