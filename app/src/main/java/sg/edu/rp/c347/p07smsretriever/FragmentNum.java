@@ -27,11 +27,9 @@ public class FragmentNum extends Fragment {
     TextView tvDisplay;
     EditText etNum;
 
-
     public FragmentNum() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,19 +67,12 @@ public class FragmentNum extends Fragment {
                                 type = "Inbox:";
                                 smsBody += type + " " + address + "\n at " + date + "\n\"" + body + "\"\n\n";
                             }
-
                         }while (cursor.moveToNext());
                     }
                     tvDisplay.setText(smsBody);
-
-
                 }
             }
         });
-
-
-
         return view;
     }
-
 }

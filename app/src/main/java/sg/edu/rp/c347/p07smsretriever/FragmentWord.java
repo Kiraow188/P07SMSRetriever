@@ -31,7 +31,6 @@ public class FragmentWord extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -74,14 +73,9 @@ public class FragmentWord extends Fragment {
                         }while (cursor.moveToNext());
                     }
                     tvDisplay.setText(smsBody);
-
-
                 }
             }
         });
-
-
-
         return view;
     }
 
